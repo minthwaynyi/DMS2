@@ -1,10 +1,10 @@
-import poolObj from './dbPool.js';
-const {pool} = poolObj;
+//db/db.js
+import poolObj from "./dbPool.js";
+const { pool } = poolObj;
 
-const logonUsers = new Map()
+const logonUsers = new Map();
 
-const query = async (sql, params = []) => 
-  pool.query(sql, params)
+const query = async (sql, params = []) => pool.query(sql, params);
 
 const execute = async (sql, params = []) => {
   let conn;
@@ -18,31 +18,41 @@ const execute = async (sql, params = []) => {
     throw e;
   } finally {
     if (conn) conn.release();
-  }   
-}
+  }
+};
 
-const findUser = async ( username ) => 
-  query('SELECT * FROM users WHERE username = ?', [username])
+const findUser = async (username) =>
+  query("SELECT * FROM users WHERE username = ?", [username]);
 
-const getAllData = async () => 
-  query('SELECT * FROM data')
+const getAllData = async () => query("SELECT * FROM data");
 
-const getDataById = async ( id ) => 
-  query('SELECT * FROM data WHERE id = ?', [id])
+const getDataById = async (id) =>
+  query("SELECT * FROM data WHERE id = ?", [id]);
 
-const addData = async ( {id, Firstname, Surname, userid} ) =>
+const addData = async ({ id, Firstname, Surname, userid }) =>
   execute(
-    'INSERT INTO data (id, Firstname, Surname, userid) VALUES (?, ?, ?, ?)', 
+    "INSERT INTO data (id, Firstname, Surname, userid) VALUES (?, ?, ?, ?)",
     [id, Firstname, Surname, userid]
-  )
+  );
+
+const updateDataById = async (id, { Firstname, Surname, userid }) =>
+  execute(
+    "UPDATE data SET Firstname = ?, Surname = ?, userid = ? WHERE id = ?",
+    [Firstname, Surname, userid, id]
+  );
+
+const deleteDataById = async (id) =>
+  execute("DELETE FROM data WHERE id = ?", [id]);
 
 export {
   addData,
   findUser,
   getAllData,
   getDataById,
-  logonUsers
-}
+  updateDataById,
+  deleteDataById,
+  logonUsers,
+};
 
 /*
 const data = [

@@ -30,4 +30,19 @@ Authorization: Bearer {{login.response.body.access_token}}
 }
 
 ###
+PUT http://localhost:3000/data/5
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.access_token}}
+
+{
+    "Firstname": "Carl",
+    "Surname": "Johnson",
+    "userid": "jk"
+}
+
+###
+DELETE http://localhost:3000/data/5
+Authorization: Bearer {{login.response.body.access_token}}
+
+###
 GET http://localhost:3000/doc
