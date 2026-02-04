@@ -4,6 +4,7 @@ import {
   getAllData,
   getDataById,
   addData,
+  getUsersRecords,
   updateDataById,
   deleteDataById,
 } from "../db/db.js";
@@ -11,6 +12,10 @@ let router = Router();
 
 router.get("/", async (req, res) => {
   res.json(await getAllData());
+});
+
+router.get("/users_records", async (req, res) => {
+  res.json(await getUsersRecords());
 });
 
 router.get("/:id", async (req, res) => {
